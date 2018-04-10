@@ -16,10 +16,8 @@ public class VoltDBService implements DatabaseService{
         Client client = null;
         ClientConfig config = null;
         try {
-            config = new ClientConfig("advent","xyzzy");
-
-            client = ClientFactory.createClient(config);
-            client.createConnection("myserver.xyz.net");
+            client = ClientFactory.createClient();
+            client.createConnection("localhost");
 
             VoltTable[] results;
             client.callProcedure("HELLOWORLD.insert","American","Howdy","Earth");
@@ -29,5 +27,12 @@ public class VoltDBService implements DatabaseService{
         } catch (ProcCallException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String [] args) {
+        VoltDBService reader = new VoltDBService();
+
+        Twitter twitter = new Twitter();
+        reader.insert(twitter);
     }
 }

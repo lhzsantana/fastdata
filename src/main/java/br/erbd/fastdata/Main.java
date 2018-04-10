@@ -1,5 +1,6 @@
 package br.erbd.fastdata;
 
+import br.erbd.fastdata.datapoa.DataPoaReader;
 import br.erbd.fastdata.model.Twitter;
 import br.erbd.fastdata.elasticsearch.AnalyticsService;
 import br.erbd.fastdata.spark.TwitterStream;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Component;
 @ComponentScan
 @Component
 public class Main implements CommandLineRunner {
+
+    @Autowired
+    DataPoaReader dataPoaReader;
 
     @Autowired
     private TwitterStream twitterStream;
