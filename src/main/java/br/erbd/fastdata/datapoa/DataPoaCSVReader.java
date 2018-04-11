@@ -1,8 +1,7 @@
-package br.erbd.fastdata.datapoa.impl;
+package br.erbd.fastdata.datapoa;
 
-import br.erbd.fastdata.elasticsearch.impl.ElasticsearchService;
+import br.erbd.fastdata.elasticsearch.ElasticsearchService;
 import br.erbd.fastdata.model.Crash;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,13 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class DataPoaCSVReader implements br.erbd.fastdata.datapoa.DataPoaReader
+public class DataPoaCSVReader
 {
     private String csvFile = "/home/luiz/IdeaProjects/fastdata/src/main/resources/acidentes2016.csv";
     private DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-    @Override
     public List<Crash> getCrashes() throws IOException {
 
         String line = "";

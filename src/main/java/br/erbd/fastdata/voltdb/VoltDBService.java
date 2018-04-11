@@ -1,17 +1,14 @@
 package br.erbd.fastdata.voltdb;
 
-import br.erbd.fastdata.model.Twitter;
-import br.erbd.fastdata.voltdb.impl.DatabaseService;
-import org.voltdb.VoltTable;
+import br.erbd.fastdata.model.Tweet;
 import org.voltdb.client.Client;
 import org.voltdb.client.ClientConfig;
 import org.voltdb.client.ClientFactory;
 import org.voltdb.client.ProcCallException;
 
-public class VoltDBService implements DatabaseService{
+public class VoltDBService{
 
-    @Override
-    public void insert(Twitter twitter) {
+    public void insert(Tweet tweet) {
 
         Client client = null;
         ClientConfig config = null;
@@ -19,8 +16,7 @@ public class VoltDBService implements DatabaseService{
             client = ClientFactory.createClient();
             client.createConnection("localhost");
 
-            VoltTable[] results;
-            client.callProcedure("HELLOWORLD.insert","American","Howdy","Earth");
+            client.callProcedure("users.insert", tweet.getId(), tweet.getUser());
         } catch (java.io.IOException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -32,7 +28,7 @@ public class VoltDBService implements DatabaseService{
     public static void main(String [] args) {
         VoltDBService reader = new VoltDBService();
 
-        Twitter twitter = new Twitter();
-        reader.insert(twitter);
+        Tweet tweet = new Tweet();
+        reader.insert(tweet);
     }
 }

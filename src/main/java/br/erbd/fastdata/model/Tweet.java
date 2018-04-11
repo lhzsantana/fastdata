@@ -1,12 +1,16 @@
 package br.erbd.fastdata.model;
 
-public class Twitter {
+public class Tweet {
 
     private String id;
 
     private Double lat;
 
     private Double lon;
+
+    private String user;
+
+    private String body;
 
     public String getId() {
         return id;
@@ -30,5 +34,21 @@ public class Twitter {
 
     public void setLon(Double lon) {
         this.lon = lon;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }

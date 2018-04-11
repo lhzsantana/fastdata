@@ -1,25 +1,20 @@
-package br.erbd.fastdata.elasticsearch.impl;
+package br.erbd.fastdata.elasticsearch;
 
 import br.erbd.fastdata.model.Crash;
-import br.erbd.fastdata.model.Twitter;
-import br.erbd.fastdata.elasticsearch.AnalyticsService;
-import org.elasticsearch.action.ActionFuture;
+import br.erbd.fastdata.model.Tweet;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.common.xcontent.json.JsonXContent;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-@Component
-public class ElasticsearchService implements AnalyticsService {
+public class ElasticsearchService {
 
     TransportClient client = null;
 
@@ -29,20 +24,18 @@ public class ElasticsearchService implements AnalyticsService {
 
     }
 
-    @Override
-    public void index(Twitter twitter) throws IOException {
+    public void index(Tweet tweet) throws IOException {
 
         XContentBuilder content =
                 XContentFactory.jsonBuilder()
                         .startObject()
                         .field("location")
-                        .latlon( twitter.getLat(), twitter.getLon())
+                        .latlon( tweet.getLat(), tweet.getLon())
                         .endObject();
 
-        indexer("twitter", content, twitter.getId());
+        indexer("tweet", content, tweet.getId());
     }
 
-    @Override
     public void index(Crash crash) throws IOException {
 
         XContentBuilder content =
