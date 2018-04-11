@@ -9,15 +9,25 @@ repositories {
     mavenCentral()
 }
 
-configurations.all {
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'br.erbd.fastdata.Main'
+    }
+    baseName = 'all-in-one-jar'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 dependencies {
-    compile 'org.apache.spark:spark-core_2.11:2.0.1'
+    compile 'org.elasticsearch.client:transport:6.2.3'
+    compile 'org.elasticsearch:elasticsearch:6.2.3'
+
+    compile ('org.apache.spark:spark-core_2.11:2.0.1'){
+        //exclude group : 'io.netty'
+    }
+
     compile 'org.apache.spark:spark-mllib_2.11:2.0.1'
     compile 'org.apache.bahir:spark-streaming-twitter_2.11:2.0.1'
-
-    compile 'org.elasticsearch:elasticsearch:6.2.3'
     compile 'org.voltdb:voltdbclient:8.0'
 
     compile ('org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE'){
